@@ -27,13 +27,14 @@ def convert_file_from_jupyter_to_marimo(fname: str, debug: bool=False) -> t.NoRe
         args: list = ['marimo', 'convert', f"./{f.name}", '-o', f"{f.with_suffix(ValidFileExtensions.PYTHONFILE).name}"]
         if debug:
             print(f"Preparing to convert {f.name} to {f.with_suffix(ValidFileExtensions.PYTHONFILE).name} ...")
-        subprocess.run(args)
+        else:
+            subprocess.run(args)
 
 def main():
     working_dir = pathlib.Path(get_work_dir())
     jupyter_files = sorted(working_dir.glob(f"*{ValidFileExtensions.JUPYTERFILE}"))
-    for f in working_dir.glob(f"*{ValidFileExtensions.JUPYTERFILE}"):
-        convert_file_from_jupyter_to_marimo(f, debug=True)
+    for f in jupyter_files:
+        convert_file_from_jupyter_to_marimo(f)
 
 
 if __name__ == "__main__":
